@@ -1,9 +1,12 @@
-name: Android Build
+name: Android CI + Auto Release
 
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -28,8 +31,15 @@ jobs:
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - name: Get version
+        id: version
+        run: echo "tag=v1.0.${{ github.run_number }}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: ceezix-apk
-          path: app/build/outputs/apk/debug/*.apk
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: CEEZIX Build ${{ steps.version.outputs.tag }}
+          files: app/build/outputs/apk/debug/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
