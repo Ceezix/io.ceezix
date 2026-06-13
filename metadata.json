@@ -1,0 +1,6 @@
+{
+  "name": "Ceezix",
+  "description": "A powerful, lightweight code editor with workspace hierarchy, HTML/CSS/JS live preview with debug console, coding shortcuts toolbar, syntax highlighting, and offline runner.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
